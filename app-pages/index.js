@@ -107,7 +107,7 @@ class HomePage extends Component {
                     clipPath="url(#clip)"
                     width={width} 
                     height={height+50} 
-                    href={require('../assets/bg.jpg')}
+                    href={require('../assets/bg.png')}
                     preserveAspectRatio="xMidYmid slice" />
                     </Svg>
                 </Animated.View>
