@@ -45,7 +45,6 @@ class PlayScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Image source={require('../assets/playScreenBg.png')}/>
                 <View style={styles.titleContainer}><Text style={styles.titleText}>Who`d you rather?</Text></View>
                 <View style={styles.cardsContainer}>
                     <TouchableOpacity onPress={()=>this.changePlayer(1)} style={styles.cardContainer}>
@@ -65,7 +64,8 @@ export default PlayScreen;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor:"#ef6d55"
     },
     titleContainer:{
         position:"absolute",
@@ -73,39 +73,42 @@ const styles = StyleSheet.create({
         height:100,
         marginTop:20,
         alignItems:"center",
+        backgroundColor:"white",
         justifyContent:"center"
     },
     titleText:{
         fontSize:35,
-        color:"white",
+        color:"#ef6d55",
         fontWeight:"bold"
     },
     cardsContainer:{
         position:"absolute",
         display:"flex",
         flexDirection:"row",
-        justifyContent:"space-between",
+        justifyContent:"space-around",
         width: width,
-        height: height/3,
+        height: height/1.5,
         marginTop:150
     },
     cardContainer:{
-        width:"45%",
+        width:"48%",
         height:"100%",
         display:"flex",
-        borderRadius:10,
-        overflow:"hidden"
+        borderRadius:20,
+        overflow:"hidden",
+        position:"relative",
+        justifyContent:"flex-end"
     },
     image:{
         width:"100%",
         height:"100%"
     },
     textContainer:{
-        position:"absolute",
-        marginTop:200,
+        height:30,
         width:"100%",
         alignItems:"center",
-        backgroundColor:"black",
+        backgroundColor:"#cf5d48",
+        opacity:0.8
         },
     text:{
         color:"white",
