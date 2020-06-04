@@ -1,28 +1,44 @@
-import React, { Component } from "react";
+import React,{ Component,useState } from "react";
 import { 
     View,
     Text,
     StyleSheet,
     Image,
-    Dimensions
+    Dimensions,
+    TouchableOpacity
 } from "react-native";
-import { color } from "react-native-reanimated";
+import candidatess from "./candidates"
 const { width, height } = Dimensions.get('window')
 class PlayScreen extends Component {
+   
+    constructor(){
+        super()
+        this.state={
+            candidates: candidatess,
+            player1:candidatess.find(cand=>cand.id===3),
+            player2:candidatess.find(cand=>cand.id===5)
+        }
+        this.changePlayer = this.changePlayer.bind(this)
+    }
+    changePlayer=(id)=>{
+        this.setState(state => (id===1?{
+            player2: {...state.player1,pic:state.player1.pic}
+          }:{player1: {...state.player1,pic:state.player2.pic}}));
+    }
     render() {
         return (
             <View style={styles.container}>
                 <Image source={require('../assets/playScreenBg.png')}/>
                 <View style={styles.titleContainer}><Text style={styles.titleText}>Who`d you rather?</Text></View>
                 <View style={styles.cardsContainer}>
-                    <View style={styles.cardContainer}>
-                    <Image style={styles.image}source={require('../assets/firstContestant.jpg')}/>
-                    <View style={styles.textContainer}><Text style={styles.text}>Harry Styles</Text></View>
-                    </View>
-                    <View style={styles.cardContainer}>
-                    <Image style={styles.image}source={require('../assets/secondContestant.png')}/>
-                    <View style={styles.textContainer}><Text style={styles.text}>Jake Gyllenhaal</Text></View>
-                    </View>
+                    <TouchableOpacity onPress={()=>this.changePlayer(1)} style={styles.cardContainer}>
+                        <Image style={styles.image}source={this.state.player1.pic}/>
+                        <View style={styles.textContainer}><Text style={styles.text}>{this.state.player1.name}</Text></View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.changePlayer(2)}style={styles.cardContainer}>
+                        <Image style={styles.image}source={this.state.player2.pic}/>
+                        <View style={styles.textContainer}><Text style={styles.text}>{this.state.player2.name}</Text></View>
+                    </TouchableOpacity>
                 </View>
             </View>
         );
@@ -60,6 +76,8 @@ const styles = StyleSheet.create({
         width:"45%",
         height:"100%",
         display:"flex",
+        borderRadius:10,
+        overflow:"hidden"
     },
     image:{
         width:"100%",
