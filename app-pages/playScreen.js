@@ -9,22 +9,39 @@ import {
 } from "react-native";
 import candidatess from "./candidates"
 const { width, height } = Dimensions.get('window')
+function between(min, max) { 
+    return Math.floor(Math.random() * (max - min) + min)
+  }
 class PlayScreen extends Component {
-   
     constructor(){
         super()
+        const firstId=between(0,6)
+        const secondId = between(0,6)
         this.state={
             candidates: candidatess,
-            player1:candidatess.find(cand=>cand.id===3),
-            player2:candidatess.find(cand=>cand.id===5)
+            player1:candidatess[firstId],
+            player2:candidatess[secondId]
         }
+        console.log(candidatess)
         this.changePlayer = this.changePlayer.bind(this)
     }
     changePlayer=(id)=>{
-        this.setState(state => (id===1?{
-            player2: {...state.player1,pic:state.player1.pic}
-          }:{player1: {...state.player1,pic:state.player2.pic}}));
+        console.log(candidatess)
+        if(candidatess.length<1){
+            return
+        }
+        const newId = between(0,6)
+        const theOldId = id===1?this.state.player2:this.state.player2
+        if(candidatess[newId]){
+            this.setState(state => (id===1?{
+                player2: candidatess[newId]}:{player1: candidatess[newId]}));
+        }
+        else{
+            this.changePlayer(id)
+        }
+        candidatess.slice[theOldId,1]
     }
+    
     render() {
         return (
             <View style={styles.container}>
