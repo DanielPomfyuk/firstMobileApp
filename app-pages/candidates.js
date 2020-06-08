@@ -9,7 +9,7 @@ export default [{
 },{
     id:3,
     pic:require('../assets/mask.jpg'),
-    name:"Ilon Maks"
+    name:"Elon Musk"
 },{
     id:4,
     pic:require("../assets/ronaldo.jpg"),
