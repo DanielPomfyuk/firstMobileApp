@@ -17,7 +17,7 @@ export default [{
 },{
     id:5,
     pic:require("../assets/pitt.jpg"),
-    name:"Bred Pitt"
+    name:"Brad Pitt"
 },{
     id:6,
     pic:require("../assets/cooper.jpg"),

@@ -8,6 +8,7 @@ import {
     TouchableOpacity
 } from "react-native";
 import candidatesData from "./candidates"
+import WinnerScreen from "./winnerScreen";
 const { width, height } = Dimensions.get('window')
 function between(min, max) {
     return Math.floor(Math.random() * (max - min) + min)
@@ -15,9 +16,13 @@ function between(min, max) {
 class PlayScreen extends Component {
     constructor() {
         super()
-        const firstId = between(0, 6)
-        const secondId = between(0, 6)
+        let firstId = between(0, 6)
+        let secondId = between(0, 6)
+        while(secondId===firstId){
+            secondId= between(0,6)
+        }
         this.state = {
+            gameOver:false,
             failedCandidates: [],
             activeWinnerId: NaN,
             leftCurrentPlayer: candidatesData[firstId],
@@ -25,22 +30,26 @@ class PlayScreen extends Component {
         }
         this.changePlayer = this.changePlayer.bind(this)
         this.addFailedCandidate = this.addFailedCandidate.bind(this)
+        this.finishTheGame = this.finishTheGame.bind(this)
     }
     generateRandomCandidateFromRemaining() {
         const initialIdsArray = candidatesData.map(candidate => candidate.id)
         const arrayWithRemainingCandidates = initialIdsArray.filter(candidateId =>
             ![...this.state.failedCandidates, this.state.activeWinnerId].includes(candidateId))
         const a = between(0, arrayWithRemainingCandidates.length)
-        console.log("new candidate "+ candidatesData.find(cand=>cand.id===arrayWithRemainingCandidates[a]).name)
         return arrayWithRemainingCandidates[a]
+    }
+    finishTheGame(){
+        this.setState(state=>{
+           return {gameOver:true}
+        })
     }
     addFailedCandidate(id) {
         this.setState((state) => {
             return { failedCandidates: [...state.failedCandidates, id] };
-        },console.log(this.state.failedCandidates));
+        });
     }
     changePlayer(idOfWinner, idOfLooser) {
-        console.log("idOfWinner " + idOfWinner + " idOfLooser " + idOfLooser)
         this.addFailedCandidate(idOfLooser)
         this.setState((state) => {
             return { activeWinnerId: idOfWinner };
@@ -49,16 +58,19 @@ class PlayScreen extends Component {
     switchFailedCandidate() {
         this.setState(state => {
             const randomId = this.generateRandomCandidateFromRemaining()
+            if(typeof randomId === 'undefined'){
+                this.finishTheGame()
+                return
+            }
             const candidate = candidatesData.find(cand => cand.id === randomId )
-            console.log(candidate.name)
             return (state.activeWinnerId === state.leftCurrentPlayer.id ? 
                 { rightCurrentPlayer: candidate } : 
                 { leftCurrentPlayer: candidate })
-        },()=>{console.log(this.state.leftCurrentPlayer.id+" "+this.state.rightCurrentPlayer.id)}) 
+        }) 
     }
 
     render() {
-        return (
+        return (!this.state.gameOver?
             <View style={styles.container}>
                 <View style={styles.titleContainer}><Text style={styles.titleText}>Who`d you rather?</Text></View>
                 <View style={styles.cardsContainer}>
@@ -77,7 +89,7 @@ class PlayScreen extends Component {
                         <View style={styles.textContainer}><Text style={styles.text}>{this.state.rightCurrentPlayer.name}</Text></View>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </View>:<WinnerScreen id={this.state.activeWinnerId}/>
         );
     }
 }
