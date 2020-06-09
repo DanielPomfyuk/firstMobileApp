@@ -16,28 +16,31 @@ function between(min, max) {
 class PlayScreen extends Component {
     constructor() {
         super()
-        let firstId = between(0, 6)
-        let secondId = between(0, 6)
+        let firstId = between(0, candidatesData.length)
+        let secondId = between(0, candidatesData.length)
         while(secondId===firstId){
-            secondId= between(0,6)
+            secondId= between(0,candidatesData.length)
         }
         this.state = {
             gameOver:false,
             failedCandidates: [],
             activeWinnerId: NaN,
+            gameLenght:between(3,candidatesData.length-1),
+            roundsCounter:0,
             leftCurrentPlayer: candidatesData[firstId],
             rightCurrentPlayer: candidatesData[secondId]
         }
+        console.log(this.state.gameLenght)
         this.changePlayer = this.changePlayer.bind(this)
         this.addFailedCandidate = this.addFailedCandidate.bind(this)
         this.finishTheGame = this.finishTheGame.bind(this)
+        this.switchFailedCandidate = this.switchFailedCandidate.bind(this)
     }
     generateRandomCandidateFromRemaining() {
         const initialIdsArray = candidatesData.map(candidate => candidate.id)
         const arrayWithRemainingCandidates = initialIdsArray.filter(candidateId =>
             ![...this.state.failedCandidates, this.state.activeWinnerId].includes(candidateId))
-        const a = between(0, arrayWithRemainingCandidates.length)
-        return arrayWithRemainingCandidates[a]
+        return arrayWithRemainingCandidates[between(0, arrayWithRemainingCandidates.length)]
     }
     finishTheGame(){
         this.setState(state=>{
@@ -56,16 +59,17 @@ class PlayScreen extends Component {
         },()=>this.switchFailedCandidate());
     }
     switchFailedCandidate() {
+        console.log(this.state.roundsCounter)
         this.setState(state => {
             const randomId = this.generateRandomCandidateFromRemaining()
-            if(typeof randomId === 'undefined'){
+            if(typeof randomId === 'undefined'||this.state.roundsCounter===this.state.gameLenght){
                 this.finishTheGame()
                 return
             }
             const candidate = candidatesData.find(cand => cand.id === randomId )
             return (state.activeWinnerId === state.leftCurrentPlayer.id ? 
-                { rightCurrentPlayer: candidate } : 
-                { leftCurrentPlayer: candidate })
+                { rightCurrentPlayer: candidate,roundsCounter:state.roundsCounter+1 } : 
+                { leftCurrentPlayer: candidate,roundsCounter:state.roundsCounter+1 })
         }) 
     }
 
