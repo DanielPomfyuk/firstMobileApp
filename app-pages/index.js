@@ -133,7 +133,7 @@ class HomePage extends Component {
                                 </Animated.Text>
                             </Animated.View>
                         </TapGestureHandler>
-                        <TapGestureHandler onHandlerStateChange={()=>this.props.navigation.navigate('PlayScreen')}>
+                        <TapGestureHandler onHandlerStateChange={()=>this.props.navigation.navigate('PlayScreen',{gender:"female"})}>
                             <Animated.View style={{
                                 ...styles.button,
                                 shadowOffset: { width: 2, height: 2 },
@@ -144,7 +144,7 @@ class HomePage extends Component {
                                 <Text style={styles.text}>women</Text>
                             </Animated.View>
                         </TapGestureHandler>
-                        <TapGestureHandler>
+                        <TapGestureHandler onHandlerStateChange={()=>this.props.navigation.navigate('PlayScreen',{gender:"male"})}>
                             <Animated.View style={{
                                 ...styles.button,
                                 shadowOffset: { width: 2, height: 2 },

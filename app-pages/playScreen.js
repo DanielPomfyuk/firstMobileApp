@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component} from "react";
 import {
     View,
     Text,
@@ -7,15 +7,16 @@ import {
     Dimensions,
     TouchableOpacity
 } from "react-native";
-import candidatesData from "./candidates"
+import incomeData from "./candidates"
 import WinnerScreen from "./winnerScreen";
 const { width, height } = Dimensions.get('window')
 function between(min, max) {
     return Math.floor(Math.random() * (max - min) + min)
 }
 class PlayScreen extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
+        let candidatesData = incomeData.filter(candidate=>candidate.gender === props.navigation.getParam('gender'))
         let firstId = between(0, candidatesData.length)
         let secondId = between(0, candidatesData.length)
         while (secondId === firstId) {
@@ -23,6 +24,7 @@ class PlayScreen extends Component {
         }
         this.state = {
             gameOver: false,
+            candidatesData: candidatesData,
             failedCandidates: [],
             activeWinnerId: NaN,
             gameLenght: between(5, 10),
@@ -36,7 +38,7 @@ class PlayScreen extends Component {
         this.switchFailedCandidate = this.switchFailedCandidate.bind(this)
     }
     generateRandomCandidateFromRemaining() {
-        const initialIdsArray = candidatesData.map(candidate => candidate.id)
+        const initialIdsArray = this.state.candidatesData.map(candidate => candidate.id)
         const arrayWithRemainingCandidates = initialIdsArray.filter(candidateId =>
             ![...this.state.failedCandidates, this.state.activeWinnerId].includes(candidateId))
         return arrayWithRemainingCandidates[between(0, arrayWithRemainingCandidates.length)]
@@ -64,7 +66,7 @@ class PlayScreen extends Component {
             return
         }
         this.setState(state => {
-            const candidate = candidatesData.find(cand => cand.id === randomId)
+            const candidate = this.state.candidatesData.find(cand => cand.id === randomId)
             return (state.activeWinnerId === state.leftCurrentPlayer.id ?
                 { rightCurrentPlayer: candidate, roundsCounter: state.roundsCounter + 1 } :
                 { leftCurrentPlayer: candidate, roundsCounter: state.roundsCounter + 1 })
