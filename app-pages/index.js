@@ -95,6 +95,7 @@ class HomePage extends Component {
             extrapolate: Extrapolate.CLAMP
         });
     }
+
     render() {
         return (
             <View style={styles.container}>
@@ -132,7 +133,7 @@ class HomePage extends Component {
                                 </Animated.Text>
                             </Animated.View>
                         </TapGestureHandler>
-                        <TapGestureHandler>
+                        <TapGestureHandler onHandlerStateChange={()=>this.props.navigation.navigate('PlayScreen')}>
                             <Animated.View style={{
                                 ...styles.button,
                                 shadowOffset: { width: 2, height: 2 },

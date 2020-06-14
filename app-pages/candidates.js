@@ -4,7 +4,7 @@ export default [{
     name:"Harry Styles"
 },{
     id:2,
-    pic:require("../assets/gyllenhaal.png"),
+    pic:require("../assets/gyllenhaal.jpg"),
     name:"Jake Gyllenhaal"
 },{
     id:3,
@@ -84,6 +84,6 @@ export default [{
     name:"ian somerhalder"
 },{
     id:22,
-    pic:require("../assets/weeknd.jpeg"),
+    pic:require("../assets/the-weeknd.jpg"),
     name:"The Weeknd"
 }]

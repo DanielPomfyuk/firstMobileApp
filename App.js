@@ -3,6 +3,7 @@ import {Asset} from 'expo-asset'
 import {AppLoading} from 'expo'
 import HomePage from './app-pages/index'
 import PlayScreen from './app-pages/playScreen'
+import Navigator from "./routes/homeStack"
 function cacheImages(images) {
   return images.map(image => {
     if (typeof image === 'string') {
@@ -37,6 +38,6 @@ export default class App extends React.Component{
         />
       );
     }
-    return(<PlayScreen/>)
+    return(<Navigator/>)
   }
 }

@@ -18,19 +18,18 @@ class PlayScreen extends Component {
         super()
         let firstId = between(0, candidatesData.length)
         let secondId = between(0, candidatesData.length)
-        while(secondId===firstId){
-            secondId= between(0,candidatesData.length)
+        while (secondId === firstId) {
+            secondId = between(0, candidatesData.length)
         }
         this.state = {
-            gameOver:false,
+            gameOver: false,
             failedCandidates: [],
             activeWinnerId: NaN,
-            gameLenght:between(3,candidatesData.length-1),
-            roundsCounter:0,
+            gameLenght: between(5, 10),
+            roundsCounter: 0,
             leftCurrentPlayer: candidatesData[firstId],
             rightCurrentPlayer: candidatesData[secondId]
         }
-        console.log(this.state.gameLenght)
         this.changePlayer = this.changePlayer.bind(this)
         this.addFailedCandidate = this.addFailedCandidate.bind(this)
         this.finishTheGame = this.finishTheGame.bind(this)
@@ -42,9 +41,9 @@ class PlayScreen extends Component {
             ![...this.state.failedCandidates, this.state.activeWinnerId].includes(candidateId))
         return arrayWithRemainingCandidates[between(0, arrayWithRemainingCandidates.length)]
     }
-    finishTheGame(){
-        this.setState(state=>{
-           return {gameOver:true}
+    finishTheGame() {
+        this.setState(state => {
+            return { gameOver: true }
         })
     }
     addFailedCandidate(id) {
@@ -56,27 +55,26 @@ class PlayScreen extends Component {
         this.addFailedCandidate(idOfLooser)
         this.setState((state) => {
             return { activeWinnerId: idOfWinner };
-        },()=>this.switchFailedCandidate());
+        }, () => this.switchFailedCandidate());
     }
     switchFailedCandidate() {
-        console.log(this.state.roundsCounter)
+        const randomId = this.generateRandomCandidateFromRemaining()
+        if (typeof randomId === 'undefined' || this.state.roundsCounter === this.state.gameLenght) {
+            this.finishTheGame()
+            return
+        }
         this.setState(state => {
-            const randomId = this.generateRandomCandidateFromRemaining()
-            if(typeof randomId === 'undefined'||this.state.roundsCounter===this.state.gameLenght){
-                this.finishTheGame()
-                return
-            }
-            const candidate = candidatesData.find(cand => cand.id === randomId )
-            return (state.activeWinnerId === state.leftCurrentPlayer.id ? 
-                { rightCurrentPlayer: candidate,roundsCounter:state.roundsCounter+1 } : 
-                { leftCurrentPlayer: candidate,roundsCounter:state.roundsCounter+1 })
-        }) 
+            const candidate = candidatesData.find(cand => cand.id === randomId)
+            return (state.activeWinnerId === state.leftCurrentPlayer.id ?
+                { rightCurrentPlayer: candidate, roundsCounter: state.roundsCounter + 1 } :
+                { leftCurrentPlayer: candidate, roundsCounter: state.roundsCounter + 1 })
+        })
     }
 
     render() {
-        return (!this.state.gameOver?
+        return (!this.state.gameOver ?
             <View style={styles.container}>
-                <View style={styles.titleContainer}><Text style={styles.titleText}>Who`d you rather?</Text></View>
+                <View style={styles.titleContainer}></View>
                 <View style={styles.cardsContainer}>
                     <TouchableOpacity onPress={
                         () => this.changePlayer(this.state.leftCurrentPlayer.id,
@@ -87,13 +85,13 @@ class PlayScreen extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={
                         () => this.changePlayer(this.state.rightCurrentPlayer.id,
-                        this.state.leftCurrentPlayer.id)} 
+                            this.state.leftCurrentPlayer.id)}
                         style={styles.cardContainer}>
                         <Image style={styles.image} source={this.state.rightCurrentPlayer.pic} />
                         <View style={styles.textContainer}><Text style={styles.text}>{this.state.rightCurrentPlayer.name}</Text></View>
                     </TouchableOpacity>
                 </View>
-            </View>:<WinnerScreen id={this.state.activeWinnerId}/>
+            </View> : <WinnerScreen id={this.state.activeWinnerId} />
         );
     }
 }
@@ -106,12 +104,14 @@ const styles = StyleSheet.create({
     },
     titleContainer: {
         position: "absolute",
-        width: "100%",
-        height: 100,
-        marginTop: 20,
+        width: width,
+        height: width,
+        borderRadius:150,
+        marginTop:-180,
         alignItems: "center",
         backgroundColor: "white",
-        justifyContent: "center"
+        alignItems:"center",
+        justifyContent:"center"
     },
     titleText: {
         fontSize: 35,
@@ -119,36 +119,38 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     cardsContainer: {
-        position: "absolute",
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-around",
         width: width,
-        height: height / 1.5,
-        marginTop: 150
+        height: width+30,
+        marginTop:"50%"
     },
     cardContainer: {
         width: "48%",
         height: "100%",
         display: "flex",
-        borderRadius: 20,
         overflow: "hidden",
+        alignItems: "center",
         position: "relative",
-        justifyContent: "flex-end"
+        justifyContent: "center"
     },
     image: {
-        width: "100%",
-        height: "100%"
+        alignSelf: 'center',
+        height: 180,
+        width: 180,
+        borderWidth:4,
+        borderColor:"white",
+
     },
     textContainer: {
         height: 30,
         width: "100%",
         alignItems: "center",
-        backgroundColor: "#cf5d48",
-        opacity: 0.8
+        backgroundColor:"white"
     },
     text: {
-        color: "white",
+        color: "black",
         fontWeight: "bold",
         fontSize: 20,
         textTransform: "capitalize"
