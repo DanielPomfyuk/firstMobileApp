@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import Animated, { Easing } from "react-native-reanimated"
 import { TapGestureHandler, State } from "react-native-gesture-handler"
-import Svg,{Image,Circle,ClipPath} from "react-native-svg"
+import Svg,{Image,Circle,ClipPath, Rect} from "react-native-svg"
 const { width, height } = Dimensions.get('window')
 const { Value,
     event,
@@ -99,20 +99,13 @@ class HomePage extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Animated.View style={{ ...StyleSheet.absoluteFill, transform: [{ translateY: this.bgY }] }}>
-                    <Svg width={width} height={height+50}>
-                    <ClipPath id="clip">
-                        <Circle cx={width/2} r={height+50}/>
-                    </ClipPath>
-                    <Image  
-                    clipPath="url(#clip)"
-                    width={width} 
-                    height={height+50} 
-                    href={require('../assets/bg.png')}
-                    preserveAspectRatio="xMidYmid slice" />
+                <Animated.View style={{ ...StyleSheet.absoluteFill,transform: [{ translateY: this.bgY }] }}>
+                    <Svg f width={width} height={height+50}>
+                        <Rect width="100%" height="100%" fill="#69c6af"/>
+                        <Circle cx={width/2} r={height+50} fill="#88deb0"/>
                     </Svg>
                 </Animated.View>
-                <View style={styles.buttonContainer} >
+                <View style={{...styles.buttonContainer}} >
                     <TapGestureHandler onHandlerStateChange={this.onStateChange}>
                         <Animated.View style={{ ...styles.button, opacity: this.buttonOpacity, transform: [{ translateY: this.buttonY }] }}>
                             <Text style={styles.text}>Let`s play!</Text>
@@ -128,7 +121,7 @@ class HomePage extends Component {
                     }}>
                         <TapGestureHandler onHandlerStateChange={this.onCloseState}>
                             <Animated.View style={styles.closeButton}>
-                                <Animated.Text style={{fontSize:15}}>
+                                <Animated.Text style={{fontSize:15,color:"white",}}>
                                     X
                                 </Animated.Text>
                             </Animated.View>
@@ -165,26 +158,24 @@ export default HomePage;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "white",
-        justifyContent: "flex-end"
-    },
-    image: {
-        flex: 1,
-        height: null,
-        width: null
+        justifyContent: "flex-end",
+        backgroundColor:"#69c6af"
     },
     buttonContainer: {
-        height: height / 4
+        height: height / 4,
+        backgroundColor:"#69c6af"
     },
     button: {
         height: 70,
-        backgroundColor: "white",
         marginHorizontal: 20,
         borderRadius: 35,
+        borderColor:"white",
+        borderWidth:2,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     text: {
+        color:"white",
         fontSize: 20,
         fontWeight: "bold",
         textTransform: "uppercase"
@@ -192,8 +183,9 @@ const styles = StyleSheet.create({
     closeButton:{
         width:40,
         height:40,
-        backgroundColor:"white",
         borderRadius:20,
+        borderWidth:2,
+        borderColor:"white",
         alignItems:"center",
         justifyContent:"center",
         position:"absolute",

@@ -102,7 +102,7 @@ export default PlayScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#ef6d55"
+        backgroundColor: "#88deb0"
     },
     titleContainer: {
         position: "absolute",
@@ -142,17 +142,17 @@ const styles = StyleSheet.create({
         height: 180,
         width: 180,
         borderWidth:4,
-        borderColor:"white",
+        borderColor:"#69c6af",
 
     },
     textContainer: {
         height: 30,
         width: "100%",
         alignItems: "center",
-        backgroundColor:"white"
+        backgroundColor:"#69c6af"
     },
     text: {
-        color: "black",
+        color: "white",
         fontWeight: "bold",
         fontSize: 20,
         textTransform: "capitalize"

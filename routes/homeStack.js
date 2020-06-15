@@ -5,14 +5,20 @@ import PlayScreen from "../app-pages/playScreen"
 import WinnerScreen from "../app-pages/winnerScreen"
 const screens = {
     Home:{
-        screen: Home
+        screen: Home,
+        navigationOptions: {
+            headerShown: false,
+          }
     },
     PlayScreen:{
-        screen: PlayScreen
+        screen: PlayScreen,
+        navigationOptions: {
+            headerShown: false,
+          }
     },
     WinnerScreen:{
         screen: WinnerScreen
-    }
+    },
 }
 const HomeStack = createStackNavigator(screens)
 export default createAppContainer(HomeStack)
