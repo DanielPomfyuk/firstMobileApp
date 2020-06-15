@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import Animated, { Easing } from "react-native-reanimated"
 import { TapGestureHandler, State } from "react-native-gesture-handler"
-import Svg,{Image,Circle,ClipPath, Rect} from "react-native-svg"
+import Svg, { Image, Circle, ClipPath, Rect, Text as SVGText, TSpan } from "react-native-svg"
 const { width, height } = Dimensions.get('window')
 const { Value,
     event,
@@ -57,16 +57,16 @@ class HomePage extends Component {
         this.buttonOpacity = new Value(1)
         this.onStateChange = event([{
             nativeEvent: ({ state }) => block([
-                cond(eq(state, State.END), 
-                set(this.buttonOpacity, 
-                runTiming(new Clock, 1, 0)))
+                cond(eq(state, State.END),
+                    set(this.buttonOpacity,
+                        runTiming(new Clock, 1, 0)))
             ])
         }])
         this.onCloseState = event([{
             nativeEvent: ({ state }) => block([
-                cond(eq(state, State.END), 
-                set(this.buttonOpacity, 
-                runTiming(new Clock, 0, 1)))
+                cond(eq(state, State.END),
+                    set(this.buttonOpacity,
+                        runTiming(new Clock, 0, 1)))
             ])
         }])
         this.buttonY = interpolate(this.buttonOpacity, {
@@ -99,13 +99,22 @@ class HomePage extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Animated.View style={{ ...StyleSheet.absoluteFill,transform: [{ translateY: this.bgY }] }}>
-                    <Svg f width={width} height={height+50}>
-                        <Rect width="100%" height="100%" fill="#69c6af"/>
-                        <Circle cx={width/2} r={height+50} fill="#88deb0"/>
+                <Animated.View style={{ ...StyleSheet.absoluteFill, transform: [{ translateY: this.bgY }] }}>
+                    <Svg f width={width} height={height + 50}>
+                        <Rect width="100%" height="100%" fill="#69c6af" />
+                        <Circle cx={width / 2} r={height + 50} fill="#88deb0" />
+                        <SVGText fill="none"
+                            stroke="white"
+                            fontSize="100"
+                            fontWeight="bold"
+                            x="100"
+                            y="50"
+                            textAnchor="middle">
+                            <TSpan x={width+40} y={height/3} dy="0 0 0 0 0 80 0 0 100" dx="0 0 0 0 0 -300 0 0 -170" >Who`dyourather?</TSpan>
+                        </SVGText>
                     </Svg>
                 </Animated.View>
-                <View style={{...styles.buttonContainer}} >
+                <View style={{ ...styles.buttonContainer }} >
                     <TapGestureHandler onHandlerStateChange={this.onStateChange}>
                         <Animated.View style={{ ...styles.button, opacity: this.buttonOpacity, transform: [{ translateY: this.buttonY }] }}>
                             <Text style={styles.text}>Let`s play!</Text>
@@ -117,16 +126,17 @@ class HomePage extends Component {
                         transform: [{ translateY: this.gendersY }],
                         height: height / 4, ...StyleSheet.absoluteFill,
                         top: null,
-                        justifyContent: "center"
+                        justifyContent: "center",
+                        backgroundColor: "#69c6af"
                     }}>
                         <TapGestureHandler onHandlerStateChange={this.onCloseState}>
                             <Animated.View style={styles.closeButton}>
-                                <Animated.Text style={{fontSize:15,color:"white",}}>
+                                <Animated.Text style={{ fontSize: 15, color: "white", }}>
                                     X
                                 </Animated.Text>
                             </Animated.View>
                         </TapGestureHandler>
-                        <TapGestureHandler onHandlerStateChange={()=>this.props.navigation.navigate('PlayScreen',{gender:"female"})}>
+                        <TapGestureHandler onHandlerStateChange={() => this.props.navigation.navigate('PlayScreen', { gender: "female" })}>
                             <Animated.View style={{
                                 ...styles.button,
                                 shadowOffset: { width: 2, height: 2 },
@@ -137,7 +147,7 @@ class HomePage extends Component {
                                 <Text style={styles.text}>women</Text>
                             </Animated.View>
                         </TapGestureHandler>
-                        <TapGestureHandler onHandlerStateChange={()=>this.props.navigation.navigate('PlayScreen',{gender:"male"})}>
+                        <TapGestureHandler onHandlerStateChange={() => this.props.navigation.navigate('PlayScreen', { gender: "male" })}>
                             <Animated.View style={{
                                 ...styles.button,
                                 shadowOffset: { width: 2, height: 2 },
@@ -159,38 +169,37 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "flex-end",
-        backgroundColor:"#69c6af"
+        backgroundColor: "#69c6af"
     },
     buttonContainer: {
-        height: height / 4,
-        backgroundColor:"#69c6af"
+        height: height / 4
     },
     button: {
         height: 70,
         marginHorizontal: 20,
         borderRadius: 35,
-        borderColor:"white",
-        borderWidth:2,
+        borderColor: "white",
+        borderWidth: 1,
         justifyContent: "center",
         alignItems: "center",
     },
     text: {
-        color:"white",
+        color: "white",
         fontSize: 20,
         fontWeight: "bold",
         textTransform: "uppercase"
     },
-    closeButton:{
-        width:40,
-        height:40,
-        borderRadius:20,
-        borderWidth:2,
-        borderColor:"white",
-        alignItems:"center",
-        justifyContent:"center",
-        position:"absolute",
-        top:-70,
-        left:width/2-20,
+    closeButton: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: "white",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "absolute",
+        top: -70,
+        left: width / 2 - 20,
         shadowOffset: { width: 2, height: 2 },
         shadowColor: "black",
         shadowOpacity: 0.2

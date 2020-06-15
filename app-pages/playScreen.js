@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import incomeData from "./candidates"
 import WinnerScreen from "./winnerScreen";
+import Svg, { Text as SVGText, TSpan } from "react-native-svg"
+
 const { width, height } = Dimensions.get('window')
 function between(min, max) {
     return Math.floor(Math.random() * (max - min) + min)
@@ -76,7 +78,17 @@ class PlayScreen extends Component {
     render() {
         return (!this.state.gameOver ?
             <View style={styles.container}>
-                <View style={styles.titleContainer}></View>
+                <Svg  width={width} height={height/4-30} >
+                        <SVGText fill="white"
+                            stroke="white"
+                            fontSize="40"
+                            fontWeight="bold"
+                            x="50"
+                            y="100"
+                            textAnchor="middle">
+                            <TSpan x={width/2-10} y={height/4 -120} dy="0 0 0 0 0 40 0 0 30" dx="0 0 0 0 0 -100 0 0 0">Who`dyourather?</TSpan>
+                        </SVGText>
+                    </Svg>
                 <View style={styles.cardsContainer}>
                     <TouchableOpacity onPress={
                         () => this.changePlayer(this.state.leftCurrentPlayer.id,
@@ -102,7 +114,9 @@ export default PlayScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#88deb0"
+        backgroundColor: "#88deb0",
+        flexDirection:"column",
+        justifyContent:"flex-start",
     },
     titleContainer: {
         position: "absolute",
@@ -122,11 +136,11 @@ const styles = StyleSheet.create({
     },
     cardsContainer: {
         display: "flex",
+        marginTop:0,
         flexDirection: "row",
         justifyContent: "space-around",
         width: width,
-        height: width+30,
-        marginTop:"50%"
+        height:height/3,
     },
     cardContainer: {
         width: "48%",
