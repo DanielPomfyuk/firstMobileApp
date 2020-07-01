@@ -4,6 +4,7 @@ import Home from "../app-pages/index"
 import PlayScreen from "../app-pages/playScreen"
 import WinnerScreen from "../app-pages/winnerScreen"
 const screens = {
+    
     Home:{
         screen: Home,
         navigationOptions: {
@@ -17,7 +18,10 @@ const screens = {
           }
     },
     WinnerScreen:{
-        screen: WinnerScreen
+        screen: WinnerScreen,
+        navigationOptions: {
+            headerShown: false,
+          }
     },
 }
 const HomeStack = createStackNavigator(screens)

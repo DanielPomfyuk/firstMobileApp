@@ -127,6 +127,7 @@ class HomePage extends Component {
                         height: height / 4, ...StyleSheet.absoluteFill,
                         top: null,
                         justifyContent: "center",
+                        alignItems:"center",
                         backgroundColor: "#69c6af"
                     }}>
                         <TapGestureHandler onHandlerStateChange={this.onCloseState}>
@@ -172,10 +173,13 @@ const styles = StyleSheet.create({
         backgroundColor: "#69c6af"
     },
     buttonContainer: {
-        height: height / 4
+        height: height / 4,
+        justifyContent:"center",
+        alignItems:"center"
     },
     button: {
         height: 70,
+        width:width/2,
         marginHorizontal: 20,
         borderRadius: 35,
         borderColor: "white",

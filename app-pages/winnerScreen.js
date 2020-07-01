@@ -2,17 +2,21 @@ import React from "react";
 import { 
     View,
     Text,
-    StyleSheet,Image
+    StyleSheet,
+    Dimensions
 } from "react-native";
 import candidates from "./candidates"
+import Svg, { Image, Polygon, ClipPath, Rect, Text as SVGText, TSpan } from "react-native-svg"
+const { width, height } = Dimensions.get('window')
 
 const WinnerScreen = (props) => {
-    winner = candidates.find(cand=>cand.id===props.id)
+    winner = candidates.find(cand=>cand.id===props.navigation.getParam("winner"))
     return(<View style={styles.container}>
-        <View style={styles.winnerContaine}>
-        <Image style={styles.image}source={winner.pic}/>
-    <View style={styles.textContainer}><Text style={styles.text}>{winner.name} is your date </Text></View>
-    </View>
+        <View style={styles.matchContainer}>
+        <Svg  viewBox={`0 0 160 160`}>
+        <Image x="0" y="0" width="160" height="160" href={winner.pic} />
+    </Svg>
+       </View>
     </View>)
 }
 export default WinnerScreen;
@@ -23,9 +27,9 @@ const styles = StyleSheet.create({
         display:"flex",
         justifyContent:"center",
         alignItems:"center",
-        backgroundColor:"#ef6d55"
+        backgroundColor:"#88deb0"
     },
-    winnerContaine:{
+    matchContainer:{
         width:"100%",
         height:"80%",
         position:"relative"

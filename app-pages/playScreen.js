@@ -15,6 +15,8 @@ const { width, height } = Dimensions.get('window')
 function between(min, max) {
     return Math.floor(Math.random() * (max - min) + min)
 }
+const arrReload = "\u21BB"
+const arrBack = "\u2190"
 class PlayScreen extends Component {
     constructor(props) {
         super(props)
@@ -46,9 +48,7 @@ class PlayScreen extends Component {
         return arrayWithRemainingCandidates[between(0, arrayWithRemainingCandidates.length)]
     }
     finishTheGame() {
-        this.setState(state => {
-            return { gameOver: true }
-        })
+        this.props.navigation.navigate('WinnerScreen', { winner: this.state.activeWinnerId })
     }
     addFailedCandidate(id) {
         this.setState((state) => {
@@ -74,10 +74,8 @@ class PlayScreen extends Component {
                 { leftCurrentPlayer: candidate, roundsCounter: state.roundsCounter + 1 })
         })
     }
-
     render() {
-        return (!this.state.gameOver ?
-            <View style={styles.container}>
+        return (<View style={styles.container}>
                 <Svg  width={width} height={height/4-30} >
                         <SVGText fill="white"
                             stroke="white"
@@ -86,7 +84,7 @@ class PlayScreen extends Component {
                             x="50"
                             y="100"
                             textAnchor="middle">
-                            <TSpan x={width/2-10} y={height/4 -120} dy="0 0 0 0 0 40 0 0 30" dx="0 0 0 0 0 -100 0 0 0">Who`dyourather?</TSpan>
+                            <TSpan x={width/2+60} y={height/4 -80} dy="0 0 0 0 0 0 0 0 40" dx="0 0 0 0 0 20 0 0 -200">WHO`DYOURATHER</TSpan>
                         </SVGText>
                     </Svg>
                 <View style={styles.cardsContainer}>
@@ -105,7 +103,15 @@ class PlayScreen extends Component {
                         <View style={styles.textContainer}><Text style={styles.text}>{this.state.rightCurrentPlayer.name}</Text></View>
                     </TouchableOpacity>
                 </View>
-            </View> : <WinnerScreen id={this.state.activeWinnerId} />
+                    <View style={styles.buttonsContainer}>
+                        <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Home') } style={styles.button}>
+                        <Text style={styles.buttonText}>{arrBack}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button}>
+                        <Text style={styles.buttonText}>{arrReload}</Text>
+                        </TouchableOpacity>
+                    </View>
+            </View>
         );
     }
 }
@@ -170,5 +176,26 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 20,
         textTransform: "capitalize"
+    },
+    buttonsContainer:{
+        width:width/2+10,
+        height:80,
+        alignSelf:"center",
+        display:"flex",
+        flexDirection:"row",
+        justifyContent:"space-between"
+    },
+    button:{
+        borderColor:"white",
+        borderWidth:3,
+        width:width/4,
+        height:width/4,
+        borderRadius:width/8,
+        alignItems:"center",
+        justifyContent:"center"
+    },
+    buttonText:{
+        color:"white",
+        fontSize:50
     }
 });
