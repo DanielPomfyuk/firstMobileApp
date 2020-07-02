@@ -40,6 +40,10 @@ class PlayScreen extends Component {
         this.addFailedCandidate = this.addFailedCandidate.bind(this)
         this.finishTheGame = this.finishTheGame.bind(this)
         this.switchFailedCandidate = this.switchFailedCandidate.bind(this)
+        this.forceUpdateHandler = this.forceUpdateHandler.bind(this)
+    }
+    forceUpdateHandler(){
+        this.forceUpdate();
     }
     generateRandomCandidateFromRemaining() {
         const initialIdsArray = this.state.candidatesData.map(candidate => candidate.id)
@@ -104,10 +108,14 @@ class PlayScreen extends Component {
                     </TouchableOpacity>
                 </View>
                     <View style={styles.buttonsContainer}>
-                        <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Home') } style={styles.button}>
+                        <TouchableOpacity  
+                        onPress={()=>this.props.navigation.navigate('Home') } 
+                        style={styles.button}>
                         <Text style={styles.buttonText}>{arrBack}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.button}>
+                        <TouchableOpacity 
+                        onPress={()=>this.forceUpdateHandler}
+                        style={styles.button}>
                         <Text style={styles.buttonText}>{arrReload}</Text>
                         </TouchableOpacity>
                     </View>
@@ -120,7 +128,7 @@ export default PlayScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#88deb0",
+        backgroundColor: "#eb5a46",
         flexDirection:"column",
         justifyContent:"flex-start",
     },
@@ -135,44 +143,41 @@ const styles = StyleSheet.create({
         alignItems:"center",
         justifyContent:"center"
     },
-    titleText: {
-        fontSize: 35,
-        color: "#ef6d55",
-        fontWeight: "bold"
-    },
     cardsContainer: {
         display: "flex",
         marginTop:0,
         flexDirection: "row",
         justifyContent: "space-around",
         width: width,
-        height:height/3,
+        height:width,
     },
     cardContainer: {
-        width: "48%",
+        width: "49%",
         height: "100%",
         display: "flex",
         overflow: "hidden",
         alignItems: "center",
         position: "relative",
-        justifyContent: "center"
+        justifyContent: "center",
+        overflow:"hidden"
     },
     image: {
         alignSelf: 'center',
-        height: 180,
-        width: 180,
+        height: 200,
+        width: "100%",
         borderWidth:4,
-        borderColor:"#69c6af",
+        borderColor:"white",
 
     },
     textContainer: {
-        height: 30,
+        height: 50,
         width: "100%",
         alignItems: "center",
-        backgroundColor:"#69c6af"
+        justifyContent:"center",
+        backgroundColor:"white"
     },
     text: {
-        color: "white",
+        color: "#cf513d",
         fontWeight: "bold",
         fontSize: 20,
         textTransform: "capitalize"

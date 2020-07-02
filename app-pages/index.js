@@ -101,8 +101,8 @@ class HomePage extends Component {
             <View style={styles.container}>
                 <Animated.View style={{ ...StyleSheet.absoluteFill, transform: [{ translateY: this.bgY }] }}>
                     <Svg f width={width} height={height + 50}>
-                        <Rect width="100%" height="100%" fill="#69c6af" />
-                        <Circle cx={width / 2} r={height + 50} fill="#88deb0" />
+                        <Rect width="100%" height="100%" fill="#cf513d" />
+                        <Circle cx={width / 2} r={height + 50} fill="#eb5a46" />
                         <SVGText fill="none"
                             stroke="white"
                             fontSize="100"
@@ -128,7 +128,7 @@ class HomePage extends Component {
                         top: null,
                         justifyContent: "center",
                         alignItems:"center",
-                        backgroundColor: "#69c6af"
+                        backgroundColor: "#cf513d"
                     }}>
                         <TapGestureHandler onHandlerStateChange={this.onCloseState}>
                             <Animated.View style={styles.closeButton}>
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "flex-end",
-        backgroundColor: "#69c6af"
+        backgroundColor: "#cf513d"
     },
     buttonContainer: {
         height: height / 4,
